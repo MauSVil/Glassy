@@ -33,7 +33,7 @@ import {
 import { usePathname } from "next/navigation"
 import clsx from "clsx";
 
-export function Dashboard({ children }: { children: React.ReactNode }) {
+function Layout({ children }: { children: React.ReactNode }) {
 
   const pathname = usePathname()
 
@@ -228,4 +228,4 @@ export function Dashboard({ children }: { children: React.ReactNode }) {
   )
 }
 
-export default Dashboard
+export default Layout
