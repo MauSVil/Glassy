@@ -1,5 +1,6 @@
 import { Db } from "mongodb";
 import clientPromise from "..";
+import { User } from "../types/User.type";
 
 let client;
 let db: Db;
@@ -8,14 +9,6 @@ const init = async () => {
   client = await clientPromise;
   db = client.db() as Db;
 };
-
-interface User {
-  _id: string;
-  email: string;
-  role: string;
-  restaurant: string;
-  password: string;
-}
 
 export const getUsers = async (filters: Partial<User>) => {
   try {

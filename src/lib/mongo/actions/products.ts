@@ -1,5 +1,6 @@
 import { Db } from "mongodb";
 import clientPromise from "..";
+import { Product } from "../types/Product.type";
 
 let client;
 let db: Db;
@@ -9,11 +10,11 @@ const init = async () => {
   db = client.db() as Db;
 };
 
-export const getProducts = async () => {
+export const getProducts = async (filters: Partial<Product>) => {
   try {
     await init();
-    const productsCollection = db.collection('products');
-    const products = await productsCollection.find().toArray();
+    const productsCollection = db.collection<Product>('products');
+    const products = await productsCollection.find(filters).toArray();
     return products;
   } catch (e) {
     console.error('Error getting products', e);
