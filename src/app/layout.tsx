@@ -11,6 +11,8 @@ import {
   SignedOut,
   UserButton
 } from '@clerk/nextjs'
+import { dark } from '@clerk/themes';
+
 
 const dmSans = DM_Sans({ subsets: ["latin"] });
 
@@ -25,7 +27,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+        signIn: {
+          variables: { colorBackground: 'transparent', colorPrimary: '#3B79F6'}
+        }
+      }}
+    >
       <html lang="en">
           <body className={dmSans.className}>
             <ThemeProvider
@@ -35,12 +44,6 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <TooltipProvider>
-              <SignedOut>
-                <SignInButton />
-              </SignedOut>
-              <SignedIn>
-                <UserButton />
-              </SignedIn>
               <Toaster />
                 {children}
               </TooltipProvider>

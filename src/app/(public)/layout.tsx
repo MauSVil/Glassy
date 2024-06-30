@@ -1,15 +1,13 @@
 'use client';
 
 import { ReactNode } from "react";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 
 const PublicLayout = ({ children }: { children: ReactNode }) => {
+  const { isSignedIn } = useUser();
   const router = useRouter();
-  const token = Cookies.get("token");
-  if (token) {
-    router.replace("/dashboard");
-  }
+  if (isSignedIn) router.push("/dashboard");
   return children;
 };
 
