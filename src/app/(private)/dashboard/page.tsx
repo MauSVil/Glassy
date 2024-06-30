@@ -23,7 +23,7 @@ const DashboardPage = () => {
                 <Link href="#">Dashboard</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbSeparator />
+            {/* <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
                 <Link href="#">Orders</Link>
@@ -32,7 +32,7 @@ const DashboardPage = () => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbPage>Recent Orders</BreadcrumbPage>
-            </BreadcrumbItem>
+            </BreadcrumbItem> */}
           </BreadcrumbList>
         </Breadcrumb>
       </div>

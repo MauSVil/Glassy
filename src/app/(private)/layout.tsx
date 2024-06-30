@@ -30,14 +30,18 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import clsx from "clsx";
+import Cookies from "js-cookie";
 
 function Layout({ children }: { children: React.ReactNode }) {
 
   const pathname = usePathname()
-
-  console.log(pathname);
+  const router = useRouter();
+  const token = Cookies.get("token");
+  if (!token) {
+    router.replace("/login");
+  }
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
