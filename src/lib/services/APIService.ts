@@ -1,8 +1,9 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 class APIService {
   static headers = {
-    Authorization: '',
+    Authorization: Cookies.get('token') || '',
   }
 
   static async get(url: string) {
