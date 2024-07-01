@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 
 const Header = () => {
   const { isSignedIn } = useUser();
+
   return (
     <nav className="relative max-w-7xl w-full flex md:grid md:grid-cols-12 items-center justify-between px-4 md:px-8 mx-auto py-7">
       <div className='md:col-span-3'>

@@ -15,14 +15,6 @@ import {
   Users2,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import {
@@ -30,16 +22,15 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import clsx from "clsx";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { OrganizationSwitcher, useOrganization, UserButton, useUser } from "@clerk/nextjs";
+import NoOrgnizationSelected from "@/components/globals/NoOrgnizationSelected";
 
 function Layout({ children }: { children: React.ReactNode }) {
-
   const pathname = usePathname()
-  const { isSignedIn } = useUser();
-  const router = useRouter();
-  if (!isSignedIn) router.push("/sign-in");
+  const { organization } = useOrganization();
+  const organizationId = organization?.id;
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -196,10 +187,16 @@ function Layout({ children }: { children: React.ReactNode }) {
               className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
             />
           </div>
+          <OrganizationSwitcher
+            hidePersonal
+            afterCreateOrganizationUrl="/dashboard"
+            afterSelectOrganizationUrl="/dashboard"
+            afterLeaveOrganizationUrl="/dashboard"
+          />
           <UserButton showName />
         </header>
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
-          {children}
+          {organizationId ? children : <NoOrgnizationSelected />}
         </main>
       </div>
     </div>
