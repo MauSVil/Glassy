@@ -32,6 +32,9 @@ export default function RootLayout({
         baseTheme: dark,
         signIn: {
           variables: { colorBackground: 'transparent', colorPrimary: '#3B79F6'}
+        },
+        createOrganization: {
+          variables: { colorPrimary: '#3B79F6'}
         }
       }}
     >
