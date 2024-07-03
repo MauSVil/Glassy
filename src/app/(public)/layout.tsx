@@ -1,23 +1,20 @@
 'use client';
 
 import { ReactNode, useEffect } from "react";
-import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import APIService from "@/lib/services/APIService";
 
 const PublicLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const path = usePathname();
-  const token = Cookies.get("token");
 
   const getData = async () => {
     try {
-
-      const restaurants = await APIService.get("/restaurants");
-      console.log(restaurants);
-
-      if (token) {
-        if (path === "/login") router.replace("/dashboard");
+      if (path === "/onboarding") {
+        const restaurants = await APIService.get("/api/restaurants");
+        if (restaurants.length > 0) {
+          router.push("/dashboard");
+        }
       }
     } catch (error) {
       console.error(error);
@@ -26,7 +23,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     getData();
-  }, [token, path, router]);
+  }, [path, router]);
 
   return children;
 };

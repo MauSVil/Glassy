@@ -5,6 +5,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { StepProps } from "./Step1";
+import { Restaurant } from "@/lib/mongo/types/Restaurant.type";
 
 const formSchema = z.object({
   address: z.string().min(3),
@@ -12,8 +14,8 @@ const formSchema = z.object({
   email: z.string().email(),
 })
 
-const Step2 = (props: { setStep: (step: number) => void, step: number }) => {
-  const { setStep } = props;
+const Step2 = (props: StepProps) => {
+  const { setStep, setData } = props;
   const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -28,7 +30,7 @@ const Step2 = (props: { setStep: (step: number) => void, step: number }) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
     try {
-      console.log(values);
+      setData((data: Partial<Restaurant>) => ({ ...data, ...values }));
       setStep(3);
     } catch (error) {
       console.error(error);

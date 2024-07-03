@@ -6,14 +6,16 @@ import { ReactNode, useState } from "react";
 import Step1 from "./Steps/Step1";
 import Step2 from "./Steps/Step2";
 import Step3 from "./Steps/Step3";
+import { Restaurant } from "@/lib/mongo/types/Restaurant.type";
 
 const OnboardingPage = () => {
   const [step, setStep] = useState(1);
+  const [data, setData] = useState<Partial<Restaurant>>({});
 
   const steps: Record<number, (props: { setStep: (step: number) => void, step: number }) => ReactNode> = {
-    1: (props) => <Step1 {...props} />,
-    2: (props) => <Step2 {...props} />,
-    3: (props) => <Step3 {...props} />,
+    1: (props) => <Step1 {...props} setData={setData} />,
+    2: (props) => <Step2 {...props} setData={setData} />,
+    3: (props) => <Step3 {...props} setData={setData} data={data} />,
   };
 
   const StepContent = steps[step];

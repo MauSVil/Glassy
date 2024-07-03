@@ -15,6 +15,7 @@ export const getUsers = async (filters: Partial<User>) => {
     await init();
     const usersCollection = db.collection<User>('users');
     const users = await usersCollection.find(filters).toArray();
+
     return users;
   } catch (e) {
     console.error('Error getting users', e);

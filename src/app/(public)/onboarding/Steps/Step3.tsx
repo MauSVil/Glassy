@@ -8,6 +8,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { StepProps } from "./Step1";
+import { Restaurant } from "@/lib/mongo/types/Restaurant.type";
+import APIService from "@/lib/services/APIService";
 
 const formSchema = z.object({
   kitchenType: z.string().min(3),
@@ -16,8 +19,13 @@ const formSchema = z.object({
   tables: z.number().min(1),
 })
 
-const Step3 = (props: { setStep: (step: number) => void, step: number }) => {
+interface Step3Props extends StepProps {
+  data: Partial<Restaurant>;
+}
+
+const Step3 = (props: Step3Props) => {
   const [loading, setLoading] = useState(false);
+  const { setData, data } = props;
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -33,7 +41,13 @@ const Step3 = (props: { setStep: (step: number) => void, step: number }) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
     try {
-      console.log(values);
+      data.kitchenType = values.kitchenType;
+      data.schedule = values.serviceHours;
+      data.operationDays = values.openingDates;
+      data.tables = values.tables;
+
+      await APIService.post('/api/restaurants', data);
+
       router.replace('/dashboard');
     } catch (error) {
       console.error(error);
